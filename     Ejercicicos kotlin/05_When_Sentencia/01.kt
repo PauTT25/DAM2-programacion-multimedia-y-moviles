@@ -13,7 +13,10 @@
 val bannedUsers = listOf("elena", "pablo")
 
 fun checkAccess(user: String) {
-    TODO()
+    when (user){
+        in bannedUsers -> println("$user: acceso denegado")
+        "root", "admin" -> println("$user: bienvenido")
+    }
 }
 
 fun main() {
