@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -155,6 +153,7 @@ fun ListaCompraScreen(modifier: Modifier = Modifier) {
     }
 }
 
+
 @Composable
 fun ProductoCard(
     producto: Producto,
@@ -165,37 +164,49 @@ fun ProductoCard(
     val margen = dimensionResource(R.dimen.margin_medium)
 
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onToggle() }
+        modifier = modifier.fillMaxWidth()
     ) {
-        Box(modifier = Modifier.fillMaxWidth().padding(margen)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(margen),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            // Nombre del producto
             Text(
                 text = producto.nombre,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(end = dimensionResource(R.dimen.icon_size) * 2)
+                modifier = Modifier.weight(1f)
             )
 
-            // Icono de estado en la esquina superior derecha
-            Icon(
-                imageVector = if (producto.comprado) Icons.Filled.CheckCircle else Icons.Filled.ShoppingCart,
-                contentDescription = stringResource(
-                    if (producto.comprado) R.string.cd_bought else R.string.cd_pending
-                ),
-                tint = if (producto.comprado) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(dimensionResource(R.dimen.icon_size))
-            )
-
-            // Botón de eliminar en la esquina inferior derecha
+            // Botón para marcar como comprado o pendiente
             IconButton(
-                onClick = onDelete,
-                modifier = Modifier.align(Alignment.BottomEnd)
+                onClick = onToggle
+            ) {
+                Icon(
+                    imageVector = if (producto.comprado)
+                        Icons.Filled.CheckCircle
+                    else
+                        Icons.Filled.ShoppingCart,
+                    contentDescription = stringResource(
+                        if (producto.comprado)
+                            R.string.cd_bought
+                        else
+                            R.string.cd_pending
+                    ),
+                    tint = if (producto.comprado)
+                        MaterialTheme.colorScheme.primary
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            // Botón para eliminar el producto
+            IconButton(
+                onClick = onDelete
             ) {
                 Icon(
                     imageVector = Icons.Filled.Delete,
@@ -206,6 +217,7 @@ fun ProductoCard(
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
