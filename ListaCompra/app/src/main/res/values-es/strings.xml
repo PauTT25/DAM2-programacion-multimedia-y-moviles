@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ListaCompra</string>
+    <string name="product_name_label">Nombre del producto</string>
+    <string name="add_button">Añadir</string>
+    <string name="empty_list_message">Tu lista de la compra está vacía</string>
+    <string name="cd_bought">Comprado</string>
+    <string name="cd_pending">Pendiente</string>
+    <string name="cd_delete">Eliminar producto</string>
+
+    <plurals name="pending_products">
+        <item quantity="one">%d producto pendiente</item>
+        <item quantity="other">%d productos pendientes</item>
+    </plurals>
+</resources>
